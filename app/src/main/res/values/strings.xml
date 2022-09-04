@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Food Market</string>
+    <string name="phone_number">Phone number</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="new_in_food_market">New in Food Market?</string>
+    <string name="sign_up_here">Sign up here!</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="food_market_logo">Food Market Logo</string>
+</resources>
