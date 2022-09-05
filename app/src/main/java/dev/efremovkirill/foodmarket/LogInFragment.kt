@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.navigation.fragment.findNavController
 
 class LogInFragment : Fragment() {
 
@@ -22,6 +24,11 @@ class LogInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this)[LogInViewModel::class.java]
+
+        val loginButton = view.findViewById<Button>(R.id.login_button)
+        loginButton.setOnClickListener {
+            findNavController().navigate(R.id.action_logInFragment_to_mainFragment)
+        }
     }
 
     companion object {

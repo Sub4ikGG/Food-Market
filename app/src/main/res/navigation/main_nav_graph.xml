@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/logInFragment">
+    app:startDestination="@id/menuFragment">
 
     <fragment
-        android:id="@+id/logInFragment"
-        android:name="dev.efremovkirill.foodmarket.LogInFragment"
-        android:label="fragment_log_in"
-        tools:layout="@layout/fragment_log_in" >
+        android:id="@+id/menuFragment"
+        android:name="dev.efremovkirill.foodmarket.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
         <action
-            android:id="@+id/action_logInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            android:id="@+id/action_menuFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
     </fragment>
     <fragment
-        android:id="@+id/signUpFragment"
-        android:name="dev.efremovkirill.foodmarket.SignUpFragment"
-        android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        android:id="@+id/shoppingCartFragment"
+        android:name="dev.efremovkirill.foodmarket.ShoppingCartFragment"
+        android:label="fragment_shopping_cart"
+        tools:layout="@layout/fragment_shopping_cart" />
 </navigation>

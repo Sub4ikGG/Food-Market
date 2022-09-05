@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomNavStyle">
+        <item name="fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="SearchViewStyle">
+        <item name="fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>
