@@ -28,6 +28,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="24dp"
+                    android:drawableRight="@drawable/ic_baseline_shopping_cart_24"
+                    android:drawableTint="@color/black"
                     android:fontFamily="@font/ostrich"
                     android:letterSpacing="0.03"
                     android:text="Your cart"
@@ -52,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/checkout"
-            android:elevation="8dp"
+            android:elevation="16dp"
             android:padding="16dp">
 
             <TextView

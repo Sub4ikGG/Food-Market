@@ -18,7 +18,7 @@
             android:fontFamily="@font/ostrich"
             android:letterSpacing="0.02"
             android:text="Create account"
-            android:textColor="#000000"
+            android:textColor="@color/brown"
             android:textSize="40sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
