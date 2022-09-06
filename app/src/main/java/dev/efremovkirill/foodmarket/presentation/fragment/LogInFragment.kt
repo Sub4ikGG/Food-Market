@@ -1,4 +1,4 @@
-package dev.efremovkirill.foodmarket
+package dev.efremovkirill.foodmarket.presentation.fragment
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import dev.efremovkirill.foodmarket.presentation.viewmodel.LogInViewModel
+import dev.efremovkirill.foodmarket.R
 
 class LogInFragment : Fragment() {
 

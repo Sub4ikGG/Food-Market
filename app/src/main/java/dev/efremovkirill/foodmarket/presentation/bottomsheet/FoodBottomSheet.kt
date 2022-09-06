@@ -1,4 +1,4 @@
-package dev.efremovkirill.foodmarket.bottomsheet
+package dev.efremovkirill.foodmarket.presentation.bottomsheet
 
 import android.os.Bundle
 import android.view.LayoutInflater

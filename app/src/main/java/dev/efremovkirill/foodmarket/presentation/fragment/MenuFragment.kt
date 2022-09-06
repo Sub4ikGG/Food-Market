@@ -1,4 +1,4 @@
-package dev.efremovkirill.foodmarket
+package dev.efremovkirill.foodmarket.presentation.fragment
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import dev.efremovkirill.foodmarket.recyclerview.FoodAdapter
-import dev.efremovkirill.foodmarket.viewpager2.CategoryPagerAdapter
+import dev.efremovkirill.foodmarket.presentation.viewmodel.MenuViewModel
+import dev.efremovkirill.foodmarket.R
+import dev.efremovkirill.foodmarket.presentation.recyclerview.FoodAdapter
+import dev.efremovkirill.foodmarket.presentation.viewpager2.CategoryPagerAdapter
 
 class MenuFragment : Fragment() {
 

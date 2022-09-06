@@ -1,4 +1,4 @@
-package dev.efremovkirill.foodmarket.viewpager2
+package dev.efremovkirill.foodmarket.presentation.viewpager2
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

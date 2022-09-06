@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="dev.efremovkirill.foodmarket.MenuFragment"
+        android:name="dev.efremovkirill.foodmarket.presentation.fragment.MenuFragment"
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/shoppingCartFragment"
-        android:name="dev.efremovkirill.foodmarket.ShoppingCartFragment"
+        android:name="dev.efremovkirill.foodmarket.presentation.fragment.ShoppingCartFragment"
         android:label="fragment_shopping_cart"
         tools:layout="@layout/fragment_shopping_cart" />
 </navigation>

@@ -1,4 +1,4 @@
-package dev.efremovkirill.foodmarket
+package dev.efremovkirill.foodmarket.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 

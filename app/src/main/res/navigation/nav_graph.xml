@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/logInFragment"
-        android:name="dev.efremovkirill.foodmarket.LogInFragment"
+        android:name="dev.efremovkirill.foodmarket.presentation.fragment.LogInFragment"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="dev.efremovkirill.foodmarket.SignUpFragment"
+        android:name="dev.efremovkirill.foodmarket.presentation.fragment.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="dev.efremovkirill.foodmarket.MainFragment"
+        android:name="dev.efremovkirill.foodmarket.presentation.fragment.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
 </navigation>

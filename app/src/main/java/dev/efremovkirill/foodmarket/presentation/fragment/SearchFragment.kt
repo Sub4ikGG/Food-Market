@@ -1,4 +1,4 @@
-package dev.efremovkirill.foodmarket
+package dev.efremovkirill.foodmarket.presentation.fragment
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dev.efremovkirill.foodmarket.R
+import dev.efremovkirill.foodmarket.presentation.viewmodel.SearchViewModel
 
 class SearchFragment : Fragment() {
 
