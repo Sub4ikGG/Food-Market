@@ -6,6 +6,7 @@ data class FoodModel(
     var previewDesc: String,
     var fullDesc: String,
     var imageUrl: String,
+    var category: Category,
     var price: Float,
     var calories: Int,
     var weight: Float,
