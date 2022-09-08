@@ -52,7 +52,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/food_desc_textView"
+            android:id="@+id/food_previewdesc_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"

@@ -1,17 +1,19 @@
 package dev.efremovkirill.foodmarket.data.storage.orders
 
-import dev.efremovkirill.foodmarket.domain.model.FoodModel
-import dev.efremovkirill.foodmarket.domain.model.Order
+import dev.efremovkirill.foodmarket.data.model.SFoodModel
+import dev.efremovkirill.foodmarket.data.model.SOrderModel
 
 interface OrdersStorage {
 
-    suspend fun send(order: Order)
+    suspend fun send(order: SOrderModel)
 
-    suspend fun save(order: Order)
+    suspend fun save(order: SOrderModel)
 
-    suspend fun getOrdersHistory(): List<Order>
+    suspend fun getOrdersHistory(): List<SOrderModel>
 
-    suspend fun addFoodToCart(food: FoodModel)
+    suspend fun addFoodToCart(food: SFoodModel)
 
-    suspend fun removeFoodFromCart(food: FoodModel)
+    suspend fun removeFoodFromCart(food: SFoodModel)
+
+    suspend fun getCart(): List<SFoodModel>
 }

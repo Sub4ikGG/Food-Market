@@ -4,8 +4,7 @@ import dev.efremovkirill.foodmarket.data.model.SUserModel
 
 interface UserStorage {
 
-    suspend fun signupUser(user: SUserModel): Boolean
-    suspend fun loginUser(user: SUserModel): Boolean
-    suspend fun getUser(): SUserModel
+    suspend fun signupUser(user: SUserModel)
+    suspend fun getUser(phoneNumber: String): SUserModel?
 
 }

@@ -1,17 +1,31 @@
 package dev.efremovkirill.foodmarket.presentation.fragment
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dev.efremovkirill.foodmarket.presentation.viewmodel.OrdersHistoryViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dev.efremovkirill.foodmarket.R
+import dev.efremovkirill.foodmarket.di.App
+import dev.efremovkirill.foodmarket.domain.usecase.GetOrdersHistoryUseCase
+import dev.efremovkirill.foodmarket.presentation.recyclerview.OrdersHistoryAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class OrdersHistoryFragment : Fragment() {
 
-    private lateinit var viewModel: OrdersHistoryViewModel
+    private val ordersHistoryAdapter = OrdersHistoryAdapter()
+    private val getOrdersHistory = GetOrdersHistoryUseCase()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        (requireActivity().applicationContext as App).appComponent.inject(ordersHistoryAdapter)
+        (requireActivity().applicationContext as App).appComponent.inject(getOrdersHistory)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,7 +36,16 @@ class OrdersHistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[OrdersHistoryViewModel::class.java]
+
+        val ordersHistoryRcView = view.findViewById<RecyclerView>(R.id.orders_history_rcView)
+        ordersHistoryRcView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        ordersHistoryRcView.adapter = ordersHistoryAdapter
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val history = getOrdersHistory.execute()
+            launch(Dispatchers.Main) { ordersHistoryAdapter.put(history) }
+        }
     }
 
     companion object {

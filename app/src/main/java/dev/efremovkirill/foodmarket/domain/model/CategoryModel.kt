@@ -1,6 +1,6 @@
 package dev.efremovkirill.foodmarket.domain.model
 
-data class Category(
+data class CategoryModel(
     var name: String,
     var imageUrl: String
 )

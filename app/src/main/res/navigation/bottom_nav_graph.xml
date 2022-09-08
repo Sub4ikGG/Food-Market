@@ -2,21 +2,27 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_nav_graph"
+    android:id="@+id/bottom_nav_graph"
     app:startDestination="@id/menuFragment">
 
     <fragment
         android:id="@+id/menuFragment"
         android:name="dev.efremovkirill.foodmarket.presentation.fragment.MenuFragment"
         android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" >
-        <action
-            android:id="@+id/action_menuFragment_to_shoppingCartFragment"
-            app:destination="@id/shoppingCartFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="dev.efremovkirill.foodmarket.presentation.fragment.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/shoppingCartFragment"
         android:name="dev.efremovkirill.foodmarket.presentation.fragment.ShoppingCartFragment"
         android:label="fragment_shopping_cart"
         tools:layout="@layout/fragment_shopping_cart" />
+    <fragment
+        android:id="@+id/ordersHistoryFragment"
+        android:name="dev.efremovkirill.foodmarket.presentation.fragment.OrdersHistoryFragment"
+        android:label="fragment_orders_history"
+        tools:layout="@layout/fragment_orders_history" />
 </navigation>

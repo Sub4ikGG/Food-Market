@@ -4,9 +4,9 @@ import dev.efremovkirill.foodmarket.domain.model.UserModel
 
 interface UserRepository {
 
-    suspend fun loginUser(user: UserModel): Boolean
+    suspend fun loginUser(phoneNumber: String, password: String): Boolean
 
     suspend fun signupUser(user: UserModel): Boolean
 
-    suspend fun getUser(): UserModel
+    suspend fun getUserByNumber(phoneNumber: String): UserModel
 }

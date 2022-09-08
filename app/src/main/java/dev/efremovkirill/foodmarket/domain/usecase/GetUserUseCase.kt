@@ -7,7 +7,7 @@ class GetUserUseCase {
 
     lateinit var repository: UserRepository
 
-    suspend fun execute(): UserModel {
-        return repository.getUser()
+    suspend fun execute(phoneNumber: String): UserModel {
+        return repository.getUserByNumber(phoneNumber)
     }
 }

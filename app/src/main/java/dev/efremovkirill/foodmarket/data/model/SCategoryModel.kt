@@ -1,6 +1,6 @@
 package dev.efremovkirill.foodmarket.data.model
 
-data class SCategory(
+data class SCategoryModel(
     var name: String,
     var imageUrl: String
 )

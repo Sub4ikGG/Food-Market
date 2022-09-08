@@ -2,9 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_nav_graph"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/logInFragment">
-
     <fragment
         android:id="@+id/logInFragment"
         android:name="dev.efremovkirill.foodmarket.presentation.fragment.LogInFragment"
@@ -14,21 +13,17 @@
             android:id="@+id/action_logInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
         <action
-            android:id="@+id/action_logInFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_logInFragment_to_foodMarketFragment2"
+            app:destination="@id/foodMarketFragment2" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="dev.efremovkirill.foodmarket.presentation.fragment.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
-        <action
-            android:id="@+id/action_signUpFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_sign_up" />
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="dev.efremovkirill.foodmarket.presentation.fragment.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        android:id="@+id/foodMarketFragment2"
+        android:name="dev.efremovkirill.foodmarket.presentation.fragment.FoodMarketFragment"
+        android:label="fragment_foodmarket"
+        tools:layout="@layout/fragment_foodmarket" />
 </navigation>

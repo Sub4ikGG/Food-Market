@@ -1,7 +1,41 @@
 package dev.efremovkirill.foodmarket.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import dev.efremovkirill.foodmarket.domain.model.FoodModel
+import dev.efremovkirill.foodmarket.domain.model.OrderModel
+import dev.efremovkirill.foodmarket.domain.usecase.EditShoppingCartUseCase
+import dev.efremovkirill.foodmarket.domain.usecase.GetCartUseCase
+import dev.efremovkirill.foodmarket.domain.usecase.SaveOrderUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
 class ShoppingCartViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+
+    @Inject
+    lateinit var getCart: GetCartUseCase
+    @Inject
+    lateinit var editShoppingCart: EditShoppingCartUseCase
+    @Inject
+    lateinit var saveOrder: SaveOrderUseCase
+
+    private val _cartListStateFlow = MutableStateFlow<List<FoodModel>>(emptyList())
+    val cartListStateFlow: StateFlow<List<FoodModel>> = _cartListStateFlow.asStateFlow()
+
+    suspend fun getCart() {
+        _cartListStateFlow.emit(getCart.execute())
+    }
+
+    suspend fun addFoodToCart(food: FoodModel) {
+        editShoppingCart.addToCart(food)
+    }
+
+    suspend fun removeFoodFromCart(food: FoodModel) {
+        editShoppingCart.removeFromCart(food)
+    }
+
+    suspend fun saveOrder(order: OrderModel) {
+        saveOrder.execute(order)
+    }
 }

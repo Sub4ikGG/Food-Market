@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import dev.efremovkirill.foodmarket.R
 
 class CategoryFragment : Fragment() {
@@ -20,9 +21,11 @@ class CategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.takeIf { it.containsKey(IMAGE_PARAM) }?.apply {
+        arguments?.takeIf { it.containsKey(TITLE_PARAM) }?.apply {
+            val nameTextView: TextView = view.findViewById(R.id.category_title_textView)
             val imageView: ImageView = view.findViewById(R.id.promo_imageView)
 
+            nameTextView.text = getString(TITLE_PARAM)
             /*Glide
                 .with(requireContext())
                 .load(getString(IMAGE_PARAM))
