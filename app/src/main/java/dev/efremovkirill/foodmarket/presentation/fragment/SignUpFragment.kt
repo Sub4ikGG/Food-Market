@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import dev.efremovkirill.foodmarket.R
+import dev.efremovkirill.foodmarket.animateClick
 import dev.efremovkirill.foodmarket.di.App
 import dev.efremovkirill.foodmarket.domain.model.UserModel
 import dev.efremovkirill.foodmarket.domain.usecase.SignUpUserByPhoneNumberUseCase
@@ -47,29 +48,69 @@ class SignUpFragment : Fragment() {
         val userEmailEditText = view.findViewById<EditText>(R.id.email_editText)
         val userPasswordEditText = view.findViewById<EditText>(R.id.password_editText)
 
+        setupClickListeners(
+            loginTextView,
+            signUpButton,
+            userNameEditText,
+            userPhoneNumberEditText,
+            userEmailEditText,
+            userPasswordEditText
+        )
+    }
+
+    private fun setupClickListeners(
+        loginTextView: TextView,
+        signUpButton: Button,
+        userNameEditText: EditText,
+        userPhoneNumberEditText: EditText,
+        userEmailEditText: EditText,
+        userPasswordEditText: EditText
+    ) {
         loginTextView.setOnClickListener {
             findNavController().popBackStack()
         }
 
         signUpButton.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                val user = UserModel(
-                    userNameEditText.text.toString(),
-                    userPhoneNumberEditText.text.toString(),
-                    userEmailEditText.text.toString(),
-                    userPasswordEditText.text.toString()
-                )
+            signUpButton.animateClick {
+                val name = userNameEditText.text.toString()
+                val phoneNumber = userPhoneNumberEditText.text.toString()
+                val email = userEmailEditText.text.toString()
+                val password = userPasswordEditText.text.toString()
 
-                if(signUpUserByPhoneNumber.execute(user)) {
-                    launch(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "Sign up successful!", Toast.LENGTH_SHORT).show()
-                        findNavController().popBackStack()
+                if (name.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || password.isEmpty())
+                    return@animateClick Toast.makeText(
+                        requireContext(),
+                        "Info should`nt be blank",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    val user = UserModel(
+                        userNameEditText.text.toString(),
+                        userPhoneNumberEditText.text.toString(),
+                        userEmailEditText.text.toString(),
+                        userPasswordEditText.text.toString()
+                    )
+
+                    if (signUpUserByPhoneNumber.execute(user)) {
+                        launch(Dispatchers.Main) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Sign up successful!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            findNavController().popBackStack()
+                        }
+                    } else {
+                        launch(Dispatchers.Main) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Sign up unsuccessful..",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-                }
-                else {
-                    launch(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "Sign up unsuccessful..", Toast.LENGTH_SHORT).show()
-                    }
+
                 }
 
             }

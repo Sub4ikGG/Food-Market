@@ -14,15 +14,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import dev.efremovkirill.foodmarket.OnFoodAddedFromBottomSheet
-import dev.efremovkirill.foodmarket.R
+import dev.efremovkirill.foodmarket.*
 import dev.efremovkirill.foodmarket.di.App
 import dev.efremovkirill.foodmarket.domain.model.FoodModel
 import dev.efremovkirill.foodmarket.domain.model.OrderModel
 import dev.efremovkirill.foodmarket.domain.usecase.EditShoppingCartUseCase
 import dev.efremovkirill.foodmarket.domain.usecase.GetCartUseCase
 import dev.efremovkirill.foodmarket.domain.usecase.SaveOrderUseCase
-import dev.efremovkirill.foodmarket.openFoodBottomSheet
 import dev.efremovkirill.foodmarket.presentation.recyclerview.FoodAdapter
 import dev.efremovkirill.foodmarket.presentation.recyclerview.FoodCartAdapter
 import dev.efremovkirill.foodmarket.presentation.viewmodel.ShoppingCartViewModel
@@ -48,10 +46,12 @@ class ShoppingCartFragment : Fragment(), FoodAdapter.OnFoodSelectedListener, Foo
 
         viewModel = ViewModelProvider(this)[ShoppingCartViewModel::class.java]
 
-        (requireActivity().applicationContext as App).appComponent.inject(viewModel)
-        (requireActivity().applicationContext as App).appComponent.inject(viewModel.getCart)
-        (requireActivity().applicationContext as App).appComponent.inject(viewModel.editShoppingCart)
-        (requireActivity().applicationContext as App).appComponent.inject(viewModel.saveOrder)
+        (requireActivity().applicationContext as App).appComponent.apply {
+            inject(viewModel)
+            inject(viewModel.editShoppingCart)
+            inject(viewModel.saveOrder)
+        }
+
     }
 
     override fun onCreateView(
@@ -65,44 +65,57 @@ class ShoppingCartFragment : Fragment(), FoodAdapter.OnFoodSelectedListener, Foo
         super.onViewCreated(view, savedInstanceState)
 
         val cartRcView = view.findViewById<RecyclerView>(R.id.cart_rcView)
-        checkoutLayout = view.findViewById<ConstraintLayout>(R.id.checkout_layout)
-        paymentForFood = view.findViewById<TextView>(R.id.price_textView)
-        deliveryPrice = view.findViewById<TextView>(R.id.delivery_price_textView)
-        totalPrice = view.findViewById<TextView>(R.id.total_price_textView)
-
         val checkoutTextView = view.findViewById<TextView>(R.id.checkout_button)
+
+        checkoutLayout = view.findViewById(R.id.checkout_layout)
+        paymentForFood = view.findViewById(R.id.price_textView)
+        deliveryPrice = view.findViewById(R.id.delivery_price_textView)
+        totalPrice = view.findViewById(R.id.total_price_textView)
 
         cartRcView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         cartRcView.adapter = foodCartAdapter
 
+        applyStateFlow()
+        setupClickListeners(checkoutTextView)
+    }
+
+    private fun applyStateFlow() {
         lifecycleScope.launchWhenStarted {
             viewModel.getCart()
             viewModel.cartListStateFlow
                 .onEach { foodList ->
                     foodCartAdapter.put(foodList)
-
-                    calculateOrder()
                 }
                 .collect()
         }
+    }
 
+    private fun setupClickListeners(checkoutTextView: TextView) {
         checkoutTextView.setOnClickListener {
-            val cartPrice = foodCartAdapter.getCartPrice()
-            if(cartPrice > 1f) {
-                val cart = foodCartAdapter.getCart()
-                val order = OrderModel(0, cartPrice, cart)
+            checkoutTextView.slideRight {
 
-                CoroutineScope(Dispatchers.IO).launch {
-                    viewModel.saveOrder(order)
+                val cartPrice = foodCartAdapter.getCartPrice()
+                if (cartPrice > 1f) {
+                    val cart = foodCartAdapter.getCart()
+                    val order = OrderModel(0, cartPrice, cart)
 
-                    cart.forEach { viewModel.removeFoodFromCart(it) }
-                    launch(Dispatchers.Main) {
-                        foodCartAdapter.clearCart()
-                        checkoutLayout.visibility = View.GONE
-                        Toast.makeText(requireContext(), "Order successfully confirmed!", Toast.LENGTH_SHORT).show()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel.saveOrder(order)
 
-                        findNavController().popBackStack()
+                        cart.forEach { viewModel.removeFoodFromCart(it) }
+                        launch(Dispatchers.Main) {
+                            foodCartAdapter.clearCart()
+                            checkoutLayout.hide()
+                            Toast.makeText(
+                                requireContext(),
+                                "Order successfully confirmed!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            findNavController().popBackStack()
+                        }
                     }
+
                 }
 
             }
@@ -113,10 +126,16 @@ class ShoppingCartFragment : Fragment(), FoodAdapter.OnFoodSelectedListener, Foo
         val cartPrice = foodCartAdapter.getCartPrice()
         if (foodCartAdapter.getCart().isNotEmpty()) {
             paymentForFood.text = "$${String.format("%.2f", cartPrice)}"
-            deliveryPrice.text = "$0"
-            totalPrice.text = "$${String.format("%.2f", cartPrice)}"
-            checkoutLayout.visibility = View.VISIBLE
+            deliveryPrice.text = "$25.99"
+            totalPrice.text = "$${String.format("%.2f", cartPrice + 25.99f)}"
+            checkoutLayout.show()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        calculateOrder()
     }
 
     override fun onFoodSelected(food: FoodModel) {

@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import dev.efremovkirill.foodmarket.R
+import dev.efremovkirill.foodmarket.animateClick
 import dev.efremovkirill.foodmarket.di.App
 import dev.efremovkirill.foodmarket.domain.usecase.LogInUserByPhoneNumberUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -44,23 +45,54 @@ class LogInFragment : Fragment() {
         val phoneNumberEditText = view.findViewById<EditText>(R.id.phone_editText)
         val passwordEditText = view.findViewById<EditText>(R.id.password_editText)
 
+        setupClickListeners(loginButton, phoneNumberEditText, passwordEditText, signUpTextView)
+
+    }
+
+    private fun setupClickListeners(
+        loginButton: Button,
+        phoneNumberEditText: EditText,
+        passwordEditText: EditText,
+        signUpTextView: TextView
+    ) {
         loginButton.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
+            loginButton.animateClick {
+                val phoneNumber = phoneNumberEditText.text.toString()
+                val password = passwordEditText.text.toString()
 
-                if(logInUserByPhoneNumber.execute(phoneNumberEditText.text.toString(), passwordEditText.text.toString())) {
-                    launch(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "Log in successful!", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_logInFragment_to_foodMarketFragment2)
-                    }
-                }
-                else {
-                    launch(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "Log in unsuccessful..", Toast.LENGTH_SHORT).show()
-                    }
-                }
+                if (phoneNumber.isEmpty() || password.isEmpty())
+                    return@animateClick Toast.makeText(
+                        requireContext(),
+                        "Phone and password should`nt be blank",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
+                CoroutineScope(Dispatchers.IO).launch {
+
+                    if (logInUserByPhoneNumber.execute(phoneNumber, password)) {
+                        launch(Dispatchers.Main) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Log in successful!",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            findNavController().navigate(R.id.action_logInFragment_to_foodMarketFragment2)
+                        }
+                    } else {
+                        launch(Dispatchers.Main) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Log in unsuccessful..",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                }
             }
         }
+
         signUpTextView.setOnClickListener {
             findNavController().navigate(R.id.action_logInFragment_to_signUpFragment)
         }

@@ -27,6 +27,8 @@ class FoodAdapter(private val onFoodSelected: OnFoodSelectedListener): RecyclerV
             food_imageView.setOnClickListener {
                 onFoodSelected.onFoodSelected(food)
             }
+
+            // Glide impl
         }
     }
 

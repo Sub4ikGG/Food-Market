@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import dev.efremovkirill.foodmarket.R
+import dev.efremovkirill.foodmarket.animateClick
 import dev.efremovkirill.foodmarket.di.App
 import dev.efremovkirill.foodmarket.domain.model.CategoryModel
 import dev.efremovkirill.foodmarket.domain.model.FoodModel
@@ -41,9 +43,11 @@ class MenuFragment : Fragment(), FoodAdapter.OnFoodSelectedListener {
 
         viewModel = ViewModelProvider(this)[MenuViewModel::class.java]
 
-        (requireActivity().applicationContext as App).appComponent.inject(viewModel)
-        (requireActivity().applicationContext as App).appComponent.inject(viewModel.getFoodByCategoryUseCase)
-        (requireActivity().applicationContext as App).appComponent.inject(viewModel.getFoodCategoriesUseCase)
+        (requireActivity().applicationContext as App).appComponent.apply {
+            inject(viewModel)
+            inject(viewModel.getFoodByCategoryUseCase)
+            inject(viewModel.getFoodCategoriesUseCase)
+        }
     }
 
     override fun onCreateView(
@@ -61,7 +65,15 @@ class MenuFragment : Fragment(), FoodAdapter.OnFoodSelectedListener {
         foodRcView = view.findViewById(R.id.food_rcView)
 
         applyMenuContent()
-        applyViewModelObservers()
+        applyStateFlows()
+        setupClickListener(view)
+    }
+
+    private fun setupClickListener(view: View) {
+        val swipeImageView: ImageView = view.findViewById(R.id.swipe_imageView)
+        swipeImageView.setOnClickListener {
+            swipeImageView.animateClick { categoryViewPager.currentItem++ }
+        }
     }
 
     private fun applyMenuContent() {
@@ -77,7 +89,7 @@ class MenuFragment : Fragment(), FoodAdapter.OnFoodSelectedListener {
         }
     }
 
-    private fun applyViewModelObservers() {
+    private fun applyStateFlows() {
         lifecycleScope.launchWhenStarted {
             viewModel.foodCategoriesStateFlow
                 .onEach { categories ->
@@ -106,7 +118,16 @@ class MenuFragment : Fragment(), FoodAdapter.OnFoodSelectedListener {
                         categoryViewPager.setCurrentItem(itemId, false)
                     }
 
-                    foodAdapter.put(foodList)
+                    foodRcView.animate().apply {
+                        duration = 300
+                        alpha(0f)
+                    }.withEndAction {
+                        foodAdapter.put(foodList)
+                        foodRcView.animate().apply {
+                            duration = 300
+                            alpha(1f)
+                        }
+                    }
                 }
                 .collect()
         }
@@ -115,6 +136,11 @@ class MenuFragment : Fragment(), FoodAdapter.OnFoodSelectedListener {
     override fun onResume() {
         super.onResume()
 
+        viewPaperRegisterCallback()
+
+    }
+
+    private fun viewPaperRegisterCallback() {
         categoryViewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -126,7 +152,6 @@ class MenuFragment : Fragment(), FoodAdapter.OnFoodSelectedListener {
 
             }
         })
-
     }
 
     override fun onFoodSelected(food: FoodModel) {

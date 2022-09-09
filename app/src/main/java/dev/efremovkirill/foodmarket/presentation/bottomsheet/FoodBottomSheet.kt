@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import dev.efremovkirill.foodmarket.OnFoodAddedFromBottomSheet
+import dev.efremovkirill.foodmarket.animateClick
 import dev.efremovkirill.foodmarket.databinding.FoodBottomSheetBinding
 import dev.efremovkirill.foodmarket.di.App
 import dev.efremovkirill.foodmarket.domain.model.FoodModel
@@ -23,8 +24,6 @@ class FoodBottomSheet(private var onFoodAddedFromBottomSheet: OnFoodAddedFromBot
 
     private val binding get() = _binding!!
 
-    private val editShoppingCart = EditShoppingCartUseCase()
-
     private lateinit var shoppingCartViewModel: ShoppingCartViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,10 +31,13 @@ class FoodBottomSheet(private var onFoodAddedFromBottomSheet: OnFoodAddedFromBot
 
         shoppingCartViewModel = ViewModelProvider(this)[ShoppingCartViewModel::class.java]
 
-        (requireActivity().applicationContext as App).appComponent.inject(shoppingCartViewModel)
-        (requireActivity().applicationContext as App).appComponent.inject(shoppingCartViewModel.getCart)
-        (requireActivity().applicationContext as App).appComponent.inject(shoppingCartViewModel.editShoppingCart)
-        (requireActivity().applicationContext as App).appComponent.inject(shoppingCartViewModel.saveOrder)
+        (requireActivity().applicationContext as App).appComponent.apply {
+            inject(shoppingCartViewModel)
+            inject(shoppingCartViewModel.getCart)
+            inject(shoppingCartViewModel.editShoppingCart)
+            inject(shoppingCartViewModel.saveOrder)
+        }
+
     }
 
     override fun onCreateView(
@@ -50,8 +52,13 @@ class FoodBottomSheet(private var onFoodAddedFromBottomSheet: OnFoodAddedFromBot
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val food = fillBottomSheetContent()
+        setupClickListener(food)
+    }
+
+    private fun fillBottomSheetContent(): FoodModel {
         val gson = Gson()
-        val food = gson.fromJson(arguments?.getString("food_model"), FoodModel::class.java)
+        val food = gson.fromJson(arguments?.getString("food_model"), FoodModel::class.java)!!
 
         binding.foodNameTextView.text = food.name
         binding.foodPriceTextView.text = "$${food.price}"
@@ -60,15 +67,26 @@ class FoodBottomSheet(private var onFoodAddedFromBottomSheet: OnFoodAddedFromBot
         binding.weightValueTextView.text = "${food.weight} gr."
         binding.doughValueTextView.text = food.dough
         binding.timeValueTextView.text = food.preparingTime
+        return food
+    }
 
+    private fun setupClickListener(food: FoodModel) {
         binding.addToCartCardView.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                shoppingCartViewModel.addFoodToCart(food)
-                onFoodAddedFromBottomSheet?.onFoodAddedFromBottomSheet()
-                launch(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), "Successfully added to cart!", Toast.LENGTH_SHORT).show()
-                    dismiss()
+            binding.addToCartCardView.animateClick {
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    shoppingCartViewModel.addFoodToCart(food)
+                    onFoodAddedFromBottomSheet?.onFoodAddedFromBottomSheet()
+                    launch(Dispatchers.Main) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Successfully added to cart!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        dismiss()
+                    }
                 }
+
             }
         }
     }

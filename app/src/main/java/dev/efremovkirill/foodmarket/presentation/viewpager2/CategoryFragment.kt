@@ -26,11 +26,7 @@ class CategoryFragment : Fragment() {
             val imageView: ImageView = view.findViewById(R.id.promo_imageView)
 
             nameTextView.text = getString(TITLE_PARAM)
-            /*Glide
-                .with(requireContext())
-                .load(getString(IMAGE_PARAM))
-                .dontAnimate()
-                .into(imageView)*/
+            // Glide impl
         }
     }
 }

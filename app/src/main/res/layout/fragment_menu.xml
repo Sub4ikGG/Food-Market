@@ -9,27 +9,44 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="false">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/category_viewPager2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:minHeight="150dp" />
+                android:minHeight="150dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </androidx.viewpager2.widget.ViewPager2>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/food_rcView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:alpha="0"
                 android:overScrollMode="never"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/category_viewPager2"
                 tools:listitem="@layout/preview_food_item" />
-        </LinearLayout>
+
+            <ImageView
+                android:id="@+id/swipe_imageView"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/swipe"
+                app:layout_constraintBottom_toBottomOf="@+id/category_viewPager2"
+                app:layout_constraintEnd_toEndOf="@+id/category_viewPager2"
+                app:tint="@color/black" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

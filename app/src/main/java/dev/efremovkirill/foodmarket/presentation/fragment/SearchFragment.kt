@@ -38,8 +38,10 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener, FoodAdapter.O
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (requireActivity().applicationContext as App).appComponent.inject(getFoodByCategoryUseCase)
-        (requireActivity().applicationContext as App).appComponent.inject(getFoodCategoriesUseCase)
+        (requireActivity().applicationContext as App).appComponent.apply {
+            inject(getFoodByCategoryUseCase)
+            inject(getFoodCategoriesUseCase)
+        }
     }
 
     override fun onCreateView(
@@ -51,6 +53,13 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener, FoodAdapter.O
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupViewModel()
+        getFoodList()
+        applySearchContElements(view)
+    }
+
+    private fun setupViewModel() {
         viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
 
         lifecycleScope.launchWhenStarted {
@@ -60,8 +69,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener, FoodAdapter.O
                 }
                 .collect()
         }
-        getFoodList()
-        applySearchContElements(view)
     }
 
     private fun applySearchContElements(view: View) {

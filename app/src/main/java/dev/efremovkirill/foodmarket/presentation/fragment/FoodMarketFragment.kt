@@ -15,30 +15,22 @@ class FoodMarketFragment : Fragment() {
 
     private lateinit var binding: FragmentFoodmarketBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFoodmarketBinding.inflate(layoutInflater)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onResume() {
         super.onResume()
 
-        val navController = binding.mainNavHostFragment.findNavController()
-        NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
+        applyBottomNav()
     }
 
-    companion object {
-        fun newInstance() = FoodMarketFragment()
+    private fun applyBottomNav() {
+        val navController = binding.mainNavHostFragment.findNavController()
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
     }
 }

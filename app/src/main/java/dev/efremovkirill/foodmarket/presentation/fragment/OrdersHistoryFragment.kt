@@ -23,8 +23,10 @@ class OrdersHistoryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (requireActivity().applicationContext as App).appComponent.inject(ordersHistoryAdapter)
-        (requireActivity().applicationContext as App).appComponent.inject(getOrdersHistory)
+        (requireActivity().applicationContext as App).appComponent.apply {
+            inject(ordersHistoryAdapter)
+            inject(getOrdersHistory)
+        }
     }
 
     override fun onCreateView(
@@ -37,18 +39,36 @@ class OrdersHistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val ordersHistoryRcView = setupRcView(view)
+        getOrdersHistory(ordersHistoryRcView)
+    }
+
+    private fun setupRcView(view: View): RecyclerView {
         val ordersHistoryRcView = view.findViewById<RecyclerView>(R.id.orders_history_rcView)
         ordersHistoryRcView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         ordersHistoryRcView.adapter = ordersHistoryAdapter
+        return ordersHistoryRcView
+    }
 
+    private fun getOrdersHistory(ordersHistoryRcView: RecyclerView) {
         CoroutineScope(Dispatchers.IO).launch {
+
             val history = getOrdersHistory.execute()
-            launch(Dispatchers.Main) { ordersHistoryAdapter.put(history) }
+            launch(Dispatchers.Main) {
+                ordersHistoryRcView.animate().apply {
+                    duration = 300
+                    alpha(0f)
+                }.withEndAction {
+                    ordersHistoryAdapter.put(history)
+                    ordersHistoryRcView.animate().apply {
+                        duration = 300
+                        alpha(1f)
+                    }
+                }
+            }
+
         }
     }
 
-    companion object {
-        fun newInstance() = OrdersHistoryFragment()
-    }
 }
