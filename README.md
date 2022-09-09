@@ -5,8 +5,8 @@ Online food market app.
 # data domain presentation
 ![FoodMarket](https://user-images.githubusercontent.com/98654420/189218128-9f03e163-369d-4570-895d-bd90e644b8e4.png)  
 # Screenshots
-![1](https://user-images.githubusercontent.com/98654420/189362217-37934196-404e-4132-b3ff-a2b27f6fe12f.jpg)
-![2](https://user-images.githubusercontent.com/98654420/189362224-e78297c2-ab81-46ba-8e07-e658cf18a375.jpg)
+![1](https://user-images.githubusercontent.com/98654420/189364708-d640e74a-77ff-42b8-ae6d-b5c52cff4a22.jpg)
+![2](https://user-images.githubusercontent.com/98654420/189364749-81b4c1e0-57f2-4e60-87d6-8b84ea1d1cc4.jpg)
 ![3](https://user-images.githubusercontent.com/98654420/189362229-37fdaa9c-127b-45cf-ad6f-ee1d3a61612f.jpg)
 ![4](https://user-images.githubusercontent.com/98654420/189362240-5e66609d-c19e-4737-aab2-367a6ade6655.jpg)
 ![5](https://user-images.githubusercontent.com/98654420/189362248-f7ea32c0-5975-48ef-ae7e-12dbe8be339f.jpg)
