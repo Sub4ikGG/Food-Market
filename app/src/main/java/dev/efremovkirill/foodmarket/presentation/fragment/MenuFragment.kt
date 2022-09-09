@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import dev.efremovkirill.foodmarket.R
-import dev.efremovkirill.foodmarket.animateClick
-import dev.efremovkirill.foodmarket.di.App
+import dev.efremovkirill.foodmarket.data.animateClick
+import dev.efremovkirill.foodmarket.data.di.App
+import dev.efremovkirill.foodmarket.data.openFoodBottomSheet
 import dev.efremovkirill.foodmarket.domain.model.CategoryModel
 import dev.efremovkirill.foodmarket.domain.model.FoodModel
-import dev.efremovkirill.foodmarket.openFoodBottomSheet
 import dev.efremovkirill.foodmarket.presentation.recyclerview.FoodAdapter
 import dev.efremovkirill.foodmarket.presentation.viewmodel.MenuViewModel
 import dev.efremovkirill.foodmarket.presentation.viewpager2.CategoryPagerAdapter

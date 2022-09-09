@@ -10,8 +10,8 @@ import dev.efremovkirill.foodmarket.data.model.SOrderModel
 import dev.efremovkirill.foodmarket.data.model.SUserModel
 import dev.efremovkirill.foodmarket.data.storage.room.dao.OrdersDao
 import dev.efremovkirill.foodmarket.data.storage.room.dao.UserDao
-import dev.efremovkirill.foodmarket.typeconverter.SCategoryTypeConverter
-import dev.efremovkirill.foodmarket.typeconverter.SFoodListTypeConverter
+import dev.efremovkirill.foodmarket.data.typeconverter.SCategoryTypeConverter
+import dev.efremovkirill.foodmarket.data.typeconverter.SFoodListTypeConverter
 
 @Database(entities = [SUserModel::class, SOrderModel::class, SFoodModel::class], version = 1, exportSchema = false)
 @TypeConverters(SFoodListTypeConverter::class, SCategoryTypeConverter::class)

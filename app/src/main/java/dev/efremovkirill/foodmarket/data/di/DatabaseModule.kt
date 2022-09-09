@@ -1,4 +1,4 @@
-package dev.efremovkirill.foodmarket.di
+package dev.efremovkirill.foodmarket.data.di
 
 import android.content.Context
 import dagger.Module

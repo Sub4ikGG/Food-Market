@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
-import dev.efremovkirill.foodmarket.OnFoodAddedFromBottomSheet
-import dev.efremovkirill.foodmarket.animateClick
+import dev.efremovkirill.foodmarket.data.OnFoodAddedFromBottomSheet
+import dev.efremovkirill.foodmarket.data.animateClick
 import dev.efremovkirill.foodmarket.databinding.FoodBottomSheetBinding
-import dev.efremovkirill.foodmarket.di.App
+import dev.efremovkirill.foodmarket.data.di.App
 import dev.efremovkirill.foodmarket.domain.model.FoodModel
-import dev.efremovkirill.foodmarket.domain.usecase.EditShoppingCartUseCase
 import dev.efremovkirill.foodmarket.presentation.viewmodel.ShoppingCartViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -67,6 +67,13 @@ class FoodBottomSheet(private var onFoodAddedFromBottomSheet: OnFoodAddedFromBot
         binding.weightValueTextView.text = "${food.weight} gr."
         binding.doughValueTextView.text = food.dough
         binding.timeValueTextView.text = food.preparingTime
+
+        Glide
+            .with(this)
+            .load(food.imageUrl)
+            .dontAnimate()
+            .into(binding.foodImageView)
+
         return food
     }
 

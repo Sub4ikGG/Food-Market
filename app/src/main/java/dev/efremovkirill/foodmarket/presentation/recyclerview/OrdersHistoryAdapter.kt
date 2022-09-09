@@ -30,7 +30,7 @@ class OrdersHistoryAdapter : RecyclerView.Adapter<OrdersHistoryAdapter.OrdersVie
             val addressTextView = view.findViewById<TextView>(R.id.address_textView)
 
             val id = "ORDER #${orderModel.id}"
-            val price = "$${String.format("%.2f", orderModel.totalPrice)}"
+            val price = "$${String.format("%.2f", orderModel.totalPrice + 25.99f)}"
             val address = "ADDRESS: ${orderModel.address}"
 
             orderIdTextView.text = id

@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
-import dev.efremovkirill.foodmarket.typeconverter.SFoodListTypeConverter
+import dev.efremovkirill.foodmarket.data.typeconverter.SFoodListTypeConverter
 
 @Entity(tableName = "orders_table")
 data class SOrderModel(

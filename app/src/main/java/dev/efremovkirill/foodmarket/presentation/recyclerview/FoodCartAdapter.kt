@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import dev.efremovkirill.foodmarket.R
 import dev.efremovkirill.foodmarket.domain.model.FoodModel
 
@@ -24,6 +25,12 @@ class FoodCartAdapter(private val onFoodSelected: FoodAdapter.OnFoodSelectedList
             name.text = food.name
             previewDesc.text = food.previewDesc
             price.text = "$${food.price}"
+
+            Glide
+                .with(view)
+                .load(food.imageUrl)
+                .dontAnimate()
+                .into(foodImageView)
 
             foodImageView.setOnClickListener {
                 onFoodSelected.onFoodSelected(food)

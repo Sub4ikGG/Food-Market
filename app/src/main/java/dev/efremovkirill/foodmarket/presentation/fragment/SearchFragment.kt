@@ -11,12 +11,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.efremovkirill.foodmarket.R
-import dev.efremovkirill.foodmarket.di.App
+import dev.efremovkirill.foodmarket.data.di.App
+import dev.efremovkirill.foodmarket.data.openFoodBottomSheet
 import dev.efremovkirill.foodmarket.domain.model.FoodModel
 import dev.efremovkirill.foodmarket.domain.usecase.GetFoodByCategoryUseCase
 import dev.efremovkirill.foodmarket.domain.usecase.GetFoodCategoriesUseCase
-import dev.efremovkirill.foodmarket.openFoodBottomSheet
-import dev.efremovkirill.foodmarket.presentation.bottomsheet.FoodBottomSheet
 import dev.efremovkirill.foodmarket.presentation.recyclerview.FoodAdapter
 import dev.efremovkirill.foodmarket.presentation.viewmodel.SearchViewModel
 import kotlinx.coroutines.CoroutineScope

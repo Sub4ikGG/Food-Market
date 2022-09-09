@@ -1,4 +1,4 @@
-package dev.efremovkirill.foodmarket.typeconverter
+package dev.efremovkirill.foodmarket.data.typeconverter
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

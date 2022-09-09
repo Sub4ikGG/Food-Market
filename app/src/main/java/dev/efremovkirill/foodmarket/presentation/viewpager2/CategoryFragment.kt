@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import dev.efremovkirill.foodmarket.R
 
 class CategoryFragment : Fragment() {
@@ -26,7 +27,12 @@ class CategoryFragment : Fragment() {
             val imageView: ImageView = view.findViewById(R.id.promo_imageView)
 
             nameTextView.text = getString(TITLE_PARAM)
-            // Glide impl
+
+            Glide
+                .with(view)
+                .load(getString(IMAGE_PARAM))
+                .dontAnimate()
+                .into(imageView)
         }
     }
 }

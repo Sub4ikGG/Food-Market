@@ -3,7 +3,7 @@ package dev.efremovkirill.foodmarket.data.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import dev.efremovkirill.foodmarket.typeconverter.SCategoryTypeConverter
+import dev.efremovkirill.foodmarket.data.typeconverter.SCategoryTypeConverter
 
 @Entity(tableName = "cart_table")
 data class SFoodModel(

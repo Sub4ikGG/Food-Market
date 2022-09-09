@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.efremovkirill.foodmarket.R
-import dev.efremovkirill.foodmarket.di.App
+import dev.efremovkirill.foodmarket.data.di.App
 import dev.efremovkirill.foodmarket.domain.usecase.GetOrdersHistoryUseCase
 import dev.efremovkirill.foodmarket.presentation.recyclerview.OrdersHistoryAdapter
 import kotlinx.coroutines.CoroutineScope

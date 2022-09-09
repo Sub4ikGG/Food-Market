@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -15,12 +16,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.efremovkirill.foodmarket.*
-import dev.efremovkirill.foodmarket.di.App
+import dev.efremovkirill.foodmarket.data.*
+import dev.efremovkirill.foodmarket.data.di.App
 import dev.efremovkirill.foodmarket.domain.model.FoodModel
 import dev.efremovkirill.foodmarket.domain.model.OrderModel
-import dev.efremovkirill.foodmarket.domain.usecase.EditShoppingCartUseCase
-import dev.efremovkirill.foodmarket.domain.usecase.GetCartUseCase
-import dev.efremovkirill.foodmarket.domain.usecase.SaveOrderUseCase
 import dev.efremovkirill.foodmarket.presentation.recyclerview.FoodAdapter
 import dev.efremovkirill.foodmarket.presentation.recyclerview.FoodCartAdapter
 import dev.efremovkirill.foodmarket.presentation.viewmodel.ShoppingCartViewModel
@@ -29,9 +28,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 
-class ShoppingCartFragment : Fragment(), FoodAdapter.OnFoodSelectedListener, FoodCartAdapter.OnFoodRemoveListener, OnFoodAddedFromBottomSheet {
+class ShoppingCartFragment : Fragment(), FoodAdapter.OnFoodSelectedListener, FoodCartAdapter.OnFoodRemoveListener,
+    OnFoodAddedFromBottomSheet {
 
     private val foodCartAdapter = FoodCartAdapter(this, this)
 
@@ -50,6 +49,7 @@ class ShoppingCartFragment : Fragment(), FoodAdapter.OnFoodSelectedListener, Foo
             inject(viewModel)
             inject(viewModel.editShoppingCart)
             inject(viewModel.saveOrder)
+            inject(viewModel.getCart)
         }
 
     }
@@ -66,6 +66,7 @@ class ShoppingCartFragment : Fragment(), FoodAdapter.OnFoodSelectedListener, Foo
 
         val cartRcView = view.findViewById<RecyclerView>(R.id.cart_rcView)
         val checkoutTextView = view.findViewById<TextView>(R.id.checkout_button)
+        val checkoutArrowImageView = view.findViewById<ImageView>(R.id.checkout_arrow_imageView)
 
         checkoutLayout = view.findViewById(R.id.checkout_layout)
         paymentForFood = view.findViewById(R.id.price_textView)
@@ -76,7 +77,7 @@ class ShoppingCartFragment : Fragment(), FoodAdapter.OnFoodSelectedListener, Foo
         cartRcView.adapter = foodCartAdapter
 
         applyStateFlow()
-        setupClickListeners(checkoutTextView)
+        setupClickListeners(checkoutTextView, checkoutArrowImageView)
     }
 
     private fun applyStateFlow() {
@@ -85,14 +86,15 @@ class ShoppingCartFragment : Fragment(), FoodAdapter.OnFoodSelectedListener, Foo
             viewModel.cartListStateFlow
                 .onEach { foodList ->
                     foodCartAdapter.put(foodList)
+                    calculateOrder()
                 }
                 .collect()
         }
     }
 
-    private fun setupClickListeners(checkoutTextView: TextView) {
+    private fun setupClickListeners(checkoutTextView: TextView, checkoutArrowImageView: ImageView) {
         checkoutTextView.setOnClickListener {
-            checkoutTextView.slideRight {
+            checkoutArrowImageView.slideRight {
 
                 val cartPrice = foodCartAdapter.getCartPrice()
                 if (cartPrice > 1f) {
@@ -129,6 +131,9 @@ class ShoppingCartFragment : Fragment(), FoodAdapter.OnFoodSelectedListener, Foo
             deliveryPrice.text = "$25.99"
             totalPrice.text = "$${String.format("%.2f", cartPrice + 25.99f)}"
             checkoutLayout.show()
+        }
+        else {
+            checkoutLayout.hide()
         }
     }
 

@@ -1,6 +1,5 @@
 package dev.efremovkirill.foodmarket.presentation.fragment
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,8 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import dev.efremovkirill.foodmarket.R
-import dev.efremovkirill.foodmarket.animateClick
-import dev.efremovkirill.foodmarket.di.App
+import dev.efremovkirill.foodmarket.data.animateClick
+import dev.efremovkirill.foodmarket.data.di.App
 import dev.efremovkirill.foodmarket.domain.usecase.LogInUserByPhoneNumberUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -63,7 +62,7 @@ class LogInFragment : Fragment() {
                 if (phoneNumber.isEmpty() || password.isEmpty())
                     return@animateClick Toast.makeText(
                         requireContext(),
-                        "Phone and password should`nt be blank",
+                        "All fields must be filled",
                         Toast.LENGTH_SHORT
                     ).show()
 

@@ -1,4 +1,4 @@
-package dev.efremovkirill.foodmarket.di
+package dev.efremovkirill.foodmarket.data.di
 
 import dagger.Component
 import dev.efremovkirill.foodmarket.domain.usecase.*

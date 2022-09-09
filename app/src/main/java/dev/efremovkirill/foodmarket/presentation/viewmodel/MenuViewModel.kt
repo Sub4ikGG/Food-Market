@@ -3,7 +3,7 @@ package dev.efremovkirill.foodmarket.presentation.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.efremovkirill.foodmarket.DEBUG_MODE
+import dev.efremovkirill.foodmarket.data.DEBUG_MODE
 import dev.efremovkirill.foodmarket.domain.model.CategoryModel
 import dev.efremovkirill.foodmarket.domain.model.FoodModel
 import dev.efremovkirill.foodmarket.domain.usecase.GetFoodByCategoryUseCase

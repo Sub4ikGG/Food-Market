@@ -60,7 +60,7 @@
             android:elevation="3dp"
             android:ems="10"
             android:fontFamily="sans-serif-light"
-            android:hint="@string/phone_number"
+            android:hint="@string/phone_number_example"
             android:inputType="phone"
             android:textColor="#000000"
             android:textSize="14sp"

@@ -1,6 +1,5 @@
 package dev.efremovkirill.foodmarket.presentation.fragment
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,10 +9,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import androidx.navigation.fragment.findNavController
 import dev.efremovkirill.foodmarket.R
-import dev.efremovkirill.foodmarket.animateClick
-import dev.efremovkirill.foodmarket.di.App
+import dev.efremovkirill.foodmarket.data.animateClick
+import dev.efremovkirill.foodmarket.data.di.App
+import dev.efremovkirill.foodmarket.data.isValidEmail
 import dev.efremovkirill.foodmarket.domain.model.UserModel
 import dev.efremovkirill.foodmarket.domain.usecase.SignUpUserByPhoneNumberUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -48,14 +49,7 @@ class SignUpFragment : Fragment() {
         val userEmailEditText = view.findViewById<EditText>(R.id.email_editText)
         val userPasswordEditText = view.findViewById<EditText>(R.id.password_editText)
 
-        setupClickListeners(
-            loginTextView,
-            signUpButton,
-            userNameEditText,
-            userPhoneNumberEditText,
-            userEmailEditText,
-            userPasswordEditText
-        )
+        setupClickListeners(loginTextView, signUpButton, userNameEditText, userPhoneNumberEditText, userEmailEditText, userPasswordEditText)
     }
 
     private fun setupClickListeners(
@@ -80,7 +74,28 @@ class SignUpFragment : Fragment() {
                 if (name.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || password.isEmpty())
                     return@animateClick Toast.makeText(
                         requireContext(),
-                        "Info should`nt be blank",
+                        "All fields must be filled",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                if(!phoneNumber.isDigitsOnly() || phoneNumber.length != 11)
+                    return@animateClick Toast.makeText(
+                        requireContext(),
+                        "Phone number must contains only 11 digits",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                if(!email.isValidEmail())
+                    return@animateClick Toast.makeText(
+                        requireContext(),
+                        "Please type valid email",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                if(password.length < 4)
+                    return@animateClick Toast.makeText(
+                        requireContext(),
+                        "Password length must be more than 4",
                         Toast.LENGTH_SHORT
                     ).show()
 
@@ -115,9 +130,5 @@ class SignUpFragment : Fragment() {
 
             }
         }
-    }
-
-    companion object {
-        fun newInstance() = SignUpFragment()
     }
 }

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Food Market</string>
-    <string name="phone_number">Phone number</string>
+    <string name="phone_number_example">Phone number (79123456789)</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="new_in_food_market">New in Food Market?</string>
@@ -13,4 +13,5 @@
     <string name="search">Search</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email_example_mail_com">Email (example@mail.com)</string>
 </resources>
