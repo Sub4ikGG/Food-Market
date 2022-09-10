@@ -3,9 +3,7 @@ package dev.efremovkirill.foodmarket.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import dev.efremovkirill.foodmarket.domain.model.FoodModel
 import dev.efremovkirill.foodmarket.domain.model.OrderModel
-import dev.efremovkirill.foodmarket.domain.usecase.EditShoppingCartUseCase
-import dev.efremovkirill.foodmarket.domain.usecase.GetCartUseCase
-import dev.efremovkirill.foodmarket.domain.usecase.SaveOrderUseCase
+import dev.efremovkirill.foodmarket.domain.usecase.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +14,9 @@ class ShoppingCartViewModel : ViewModel() {
     @Inject
     lateinit var getCart: GetCartUseCase
     @Inject
-    lateinit var editShoppingCart: EditShoppingCartUseCase
+    lateinit var addFoodToCartUseCase: AddFoodToCartUseCase
+    @Inject
+    lateinit var removeFoodFromCartUseCase: RemoveFoodFromCartUseCase
     @Inject
     lateinit var saveOrder: SaveOrderUseCase
 
@@ -28,11 +28,11 @@ class ShoppingCartViewModel : ViewModel() {
     }
 
     suspend fun addFoodToCart(food: FoodModel) {
-        editShoppingCart.addToCart(food)
+        addFoodToCartUseCase.execute(food)
     }
 
     suspend fun removeFoodFromCart(food: FoodModel) {
-        editShoppingCart.removeFromCart(food)
+        removeFoodFromCartUseCase.execute(food)
     }
 
     suspend fun saveOrder(order: OrderModel) {

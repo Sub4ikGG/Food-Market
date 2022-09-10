@@ -23,8 +23,13 @@ class UseCaseModule {
     }
 
     @Provides
-    fun provideEditShoppingCartUseCase(): EditShoppingCartUseCase {
-        return EditShoppingCartUseCase()
+    fun provideAddFoodToCartUseCase(): AddFoodToCartUseCase {
+        return AddFoodToCartUseCase()
+    }
+
+    @Provides
+    fun provideRemoveFoodFromCartUseCase(): RemoveFoodFromCartUseCase {
+        return RemoveFoodFromCartUseCase()
     }
 
     @Provides

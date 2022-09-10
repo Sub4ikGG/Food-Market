@@ -47,8 +47,9 @@ class ShoppingCartFragment : Fragment(), FoodAdapter.OnFoodSelectedListener, Foo
 
         (requireActivity().applicationContext as App).appComponent.apply {
             inject(viewModel)
-            inject(viewModel.editShoppingCart)
             inject(viewModel.saveOrder)
+            inject(viewModel.addFoodToCartUseCase)
+            inject(viewModel.removeFoodFromCartUseCase)
             inject(viewModel.getCart)
         }
 

@@ -34,7 +34,8 @@ class FoodBottomSheet(private var onFoodAddedFromBottomSheet: OnFoodAddedFromBot
         (requireActivity().applicationContext as App).appComponent.apply {
             inject(shoppingCartViewModel)
             inject(shoppingCartViewModel.getCart)
-            inject(shoppingCartViewModel.editShoppingCart)
+            inject(shoppingCartViewModel.addFoodToCartUseCase)
+            inject(shoppingCartViewModel.removeFoodFromCartUseCase)
             inject(shoppingCartViewModel.saveOrder)
         }
 

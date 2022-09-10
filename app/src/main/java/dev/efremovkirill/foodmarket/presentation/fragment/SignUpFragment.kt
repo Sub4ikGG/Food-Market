@@ -1,6 +1,7 @@
 package dev.efremovkirill.foodmarket.presentation.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,9 @@ import dev.efremovkirill.foodmarket.domain.model.UserModel
 import dev.efremovkirill.foodmarket.domain.usecase.SignUpUserByPhoneNumberUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class SignUpFragment : Fragment() {
 
@@ -41,15 +44,27 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val loginTextView = view.findViewById<TextView>(R.id.log_in_textView)
-        val signUpButton = view.findViewById<Button>(R.id.sign_up_button)
+        try {
+            val loginTextView = view.findViewById<TextView>(R.id.log_in_textView)
+            val signUpButton = view.findViewById<Button>(R.id.sign_up_button)
 
-        val userNameEditText = view.findViewById<EditText>(R.id.name_editText)
-        val userPhoneNumberEditText = view.findViewById<EditText>(R.id.phone_editText)
-        val userEmailEditText = view.findViewById<EditText>(R.id.email_editText)
-        val userPasswordEditText = view.findViewById<EditText>(R.id.password_editText)
+            val userNameEditText = view.findViewById<EditText>(R.id.name_editText)
+            val userPhoneNumberEditText = view.findViewById<EditText>(R.id.phone_editText)
+            val userEmailEditText = view.findViewById<EditText>(R.id.email_editText)
+            val userPasswordEditText = view.findViewById<EditText>(R.id.password_editText)
 
-        setupClickListeners(loginTextView, signUpButton, userNameEditText, userPhoneNumberEditText, userEmailEditText, userPasswordEditText)
+            setupClickListeners(
+                loginTextView,
+                signUpButton,
+                userNameEditText,
+                userPhoneNumberEditText,
+                userEmailEditText,
+                userPasswordEditText
+            )
+        }
+        catch (e: Exception) {
+            println(e.message)
+        }
     }
 
     private fun setupClickListeners(
