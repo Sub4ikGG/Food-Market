@@ -14,4 +14,4 @@ Online food market app.
 ![6](https://user-images.githubusercontent.com/98654420/189362256-04c3ec7b-c4ff-40f1-b008-5d423944d3d5.jpg)
 ![7](https://user-images.githubusercontent.com/98654420/189362259-d9699ab7-23a6-4491-a56f-c12b1302b0b7.jpg)  
 # Tech
-Kotlin, MVVM, Clean Architecture, Flow, Coroutines, Room SQLite, Dagger
+Kotlin, MVVM, Clean Architecture, Flow, Coroutines, Room SQLite, Dagger, Retrofit
