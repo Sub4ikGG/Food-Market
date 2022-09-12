@@ -27,10 +27,11 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/orders_history_rcView"
-                android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:overScrollMode="never"
+                android:paddingLeft="2dp"
                 tools:itemCount="10"
                 tools:listitem="@layout/history_order_item" />
         </LinearLayout>
